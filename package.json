@@ -1,0 +1,47 @@
+{
+  "name": "fee-explorer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FeeCollector event ingestion and query service",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev:api": "tsx watch src/api/server.ts",
+    "dev:ingestor": "tsx watch src/ingestor/main.ts",
+    "build": "tsc -p tsconfig.json",
+    "start:api": "node dist/api/server.js",
+    "start:ingestor": "node dist/ingestor/main.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "npm run typecheck",
+    "test": "vitest run --dir src",
+    "test:watch": "vitest --dir src",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@typegoose/typegoose": "^13.3.0",
+    "dotenv": "^17.4.2",
+    "ethers": "^5.8.0",
+    "fastify": "^5.8.5",
+    "lifi-contract-typings": "https://github.com/lifinance/lifi-contract-types/archive/a896eb7465aa2e22255e83baacb347be8ea424b6.tar.gz",
+    "mongoose": "~9.6.0",
+    "p-retry": "^8.0.0",
+    "pino": "^10.3.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@vitest/coverage-v8": "^4.1.6",
+    "mongodb-memory-server": "^11.1.0",
+    "pino-pretty": "^13.1.3",
+    "prettier": "^3.8.3",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.6"
+  }
+}

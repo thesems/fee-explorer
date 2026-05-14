@@ -1,0 +1,43 @@
+services:
+  mongodb:
+    image: mongo:7
+    container_name: fee-explorer-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: fee_explorer
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: .
+    image: fee-explorer:local
+    container_name: fee-explorer-api
+    restart: unless-stopped
+    command: npm run start:api
+    env_file:
+      - .env
+    environment:
+      LOG_FORMAT: json
+      MONGODB_URI: mongodb://mongodb:27017/fee_explorer
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+
+  ingestor:
+    image: fee-explorer:local
+    container_name: fee-explorer-ingestor
+    restart: unless-stopped
+    command: npm run start:ingestor
+    env_file:
+      - .env
+    environment:
+      LOG_FORMAT: json
+      MONGODB_URI: mongodb://mongodb:27017/fee_explorer
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:
